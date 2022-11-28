@@ -45,7 +45,7 @@ describe('rest routes', () => {
   });
 
   it('/api/v1/restaurants/:id should return rest with nested review', async () => {
-    const resp = await request(app).get('/api/v1/restaurants');
+    const resp = await request(app).get('/api/v1/restaurants/1');
     expect(resp.body).toMatchInlineSnapshot();
   });
 
