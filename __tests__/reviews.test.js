@@ -3,12 +3,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
-const mockUser = {
-  firstName: 'Test',
-  lastName: 'User',
-  email: 'test@example.com',
-  password: '12345',
-};
+
 describe('delete test', () => {
   beforeEach(() => {
     return setup(pool);
