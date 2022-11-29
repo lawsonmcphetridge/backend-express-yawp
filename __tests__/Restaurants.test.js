@@ -102,10 +102,20 @@ describe('rest routes', () => {
     return [agent, user];
   };
 
-  it(' post /api/v1/restaurants/1 should post a new review', async () => {
+  it('post /api/v1/restaurants/1 should post a new review', async () => {
     const [agent] = await registerAndLogin();
-    const resp = await agent.post('/api/v1/restaurants/1/reviews').send({ stars: 5, detail: 'It was okay' });
-    expect(resp.body).toMatchInlineSnapshot();
+    const resp = await agent
+      .post('/api/v1/restaurants/1/reviews')
+      .send({ stars: 5, detail: 'It was okay' });
+    expect(resp.body).toMatchInlineSnapshot(`
+      Object {
+        "detail": "It was okay",
+        "id": "4",
+        "restaurant_id": "1",
+        "stars": 5,
+        "user_id": "4",
+      }
+    `);
   });
 
   afterAll(() => {
