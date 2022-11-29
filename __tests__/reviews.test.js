@@ -7,6 +7,6 @@ describe('delete test', async () => {
     expect(resp.status).toBe(204);
 
     const getResp = await request(app).get('/api/v1/reviews/1');
-    expect(resp.status).toBe(404);
+    expect(getResp.status).toBe(404);
   });
 });
