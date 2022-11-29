@@ -2,6 +2,14 @@ const setup = require('../data/setup');
 const app = require('../lib/app');
 const request = require('supertest');
 const pool = require('../lib/utils/pool');
+const UserService = require('../lib/services/UserService');
+
+const mockUser = {
+  firstName: 'Test',
+  lastName: 'User',
+  email: 'test@example.com',
+  password: '12345',
+};
 
 describe('rest routes', () => {
   beforeEach(() => {
@@ -85,11 +93,21 @@ describe('rest routes', () => {
     `);
   });
 
-    
-    
-    
-    
-    
+  const registerAndLogin = async () => {
+    const agent = request.agent(app);
+    const user = await UserService.create(mockUser);
+    await agent
+      .post('/api/v1/users/sessions')
+      .send({ email: mockUser.email, password: mockUser.password });
+    return [agent, user];
+  };
+
+  it(' post /api/v1/restaurants/1 should post a new review', async () => {
+    const [agent] = await registerAndLogin();
+    const resp = await agent.post('/api/v1/restaurants/1/reviews').send({ stars: 5, detail: 'It was okay' });
+    expect(resp.body).toMatchInlineSnapshot();
+  });
+
   afterAll(() => {
     pool.end();
   });
